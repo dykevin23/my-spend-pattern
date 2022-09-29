@@ -1,14 +1,22 @@
-const App = () => {
-  const apiCall = async () => {
-    console.log("### my-spend-pattern app start");
-    const resposne = await (await fetch("/test")).json();
-    console.log("### response => ", resposne);
-  };
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Layout from "./components/Layout";
+import Charts from "./pages/Charts";
+import Form from "./pages/Form";
+import Home from "./pages/Home";
+import List from "./pages/List";
 
+const App = () => {
   return (
-    <div>
-      Hello React.js<button onClick={apiCall}>api call</button>
-    </div>
+    <BrowserRouter>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/list" element={<List />} />
+          <Route path="/form" element={<Form />} />
+          <Route path="/charts" element={<Charts />} />
+        </Routes>
+      </Layout>
+    </BrowserRouter>
   );
 };
 
