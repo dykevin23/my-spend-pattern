@@ -6,11 +6,11 @@ const LayoutDiv = styled.div`
   gap: 5px;
   height: 100vh;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr 9fr;
+  grid-template-rows: 0.5fr 9fr;
 `;
 
 const Content = styled.div`
-  background-color: aqua;
+  background-color: #ecf0f1;
 `;
 
 const Layout = ({ children }) => {
