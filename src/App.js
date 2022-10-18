@@ -1,22 +1,27 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Layout from "./components/UI/Layout";
-import Charts from "./pages/Charts";
-import Form from "./pages/Form";
-import Home from "./pages/Home";
-import List from "./pages/List";
+import { createGlobalStyle } from "styled-components";
+import reset from "styled-reset";
+import Container from "./components/UI/Container";
+import Routers from "./Routers";
+
+const GlobalStyle = createGlobalStyle`
+  ${reset}
+  body {
+    background-color: ${(props) => props.theme.bgColor}
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+`;
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/list" element={<List />} />
-          <Route path="/form" element={<Form />} />
-          <Route path="/charts" element={<Charts />} />
-        </Routes>
-      </Layout>
-    </BrowserRouter>
+    <>
+      <GlobalStyle />
+      <Container>
+        <Routers />
+      </Container>
+    </>
   );
 };
 

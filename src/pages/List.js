@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 
 import Card from "../components/Card";
-import Box from "../components/UI/Box";
+import Container from "../components/UI/Container";
 
 const List = () => {
   const [list, setList] = useState([]);
@@ -23,14 +23,7 @@ const List = () => {
 
   const SortingBar = styled.div``;
 
-  return (
-    <Box>
-      <SortingBar></SortingBar>
-      {list.map((item) => {
-        return <Card {...item} />;
-      })}
-    </Box>
-  );
+  return <div>List</div>;
 };
 
 export default List;
