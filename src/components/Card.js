@@ -1,14 +1,27 @@
 import styled from "styled-components";
 
-const CardDiv = styled.div`
+const StyledCard = styled.div`
   display: flex;
   background-color: #bdc3c7;
-  height: 50px;
+  height: 100px;
   margin: 10px;
+  border-radius: 10px;
+  padding: 10px;
 `;
 
-const Card = (props) => {
-  return <CardDiv>1</CardDiv>;
+const ExpenditureInfo = styled.div``;
+
+const PriceInfo = styled.div``;
+
+const Card = ({ withdraw }) => {
+  return (
+    <StyledCard>
+      <ExpenditureInfo />
+      <PriceInfo>
+        <span>{withdraw}원</span>
+      </PriceInfo>
+    </StyledCard>
+  );
 };
 
 export default Card;

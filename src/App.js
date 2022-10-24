@@ -1,5 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
+import { ReactQueryDevtools } from "react-query/devtools";
 import Container from "./components/UI/Container";
 import Routers from "./Routers";
 
@@ -21,6 +22,7 @@ const App = () => {
       <Container>
         <Routers />
       </Container>
+      <ReactQueryDevtools initialIsOpen={true} />
     </>
   );
 };

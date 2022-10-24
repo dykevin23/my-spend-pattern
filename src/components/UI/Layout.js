@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Header from "./Header";
 
-const LayoutDiv = styled.div`
+const StyledLayout = styled.div`
   display: grid;
   gap: 5px;
   height: 100vh;
@@ -15,10 +15,10 @@ const Content = styled.div`
 
 const Layout = ({ children }) => {
   return (
-    <LayoutDiv>
+    <StyledLayout>
       <Header />
       <Content>{children}</Content>
-    </LayoutDiv>
+    </StyledLayout>
   );
 };
 

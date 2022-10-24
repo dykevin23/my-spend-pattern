@@ -1,29 +1,60 @@
-import { useState, useEffect, useCallback } from "react";
+import { useEffect } from "react";
+import { useQuery } from "react-query";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
+import { getExpenditureList } from "../api";
+import { expenditureListAtom } from "../atoms";
 
 import Card from "../components/Card";
-import Container from "../components/UI/Container";
+
+const CardList = styled.ul``;
 
 const List = () => {
-  const [list, setList] = useState([]);
+  const [expenditureList, setExpenditureList] =
+    useRecoilState(expenditureListAtom);
+  const { isLoading, data } = useQuery("allExpenditures", getExpenditureList);
 
   useEffect(() => {
-    apiCall();
-  });
+    console.log("### update");
+    setExpenditureList(
+      data?.results.map((item) => {
+        return {
+          id: item.id,
+          ...settingProperties(item.properties),
+        };
+      })
+    );
+  }, [data]);
 
-  const apiCall = useCallback(async () => {
-    console.log("### my-spend-pattern app start => ", list);
+  // type
+  // date, created_time, select, rich_text, title
+  // number
 
-    if (list.length === 0) {
-      const resposne = await (await fetch("/list")).json();
-      console.log("### response => ", resposne);
-      setList(resposne.results);
-    }
-  }, [list]);
+  const settingProperties = (properties) => {
+    const keys = Object.keys(properties);
+    let result = {};
+    keys
+      .filter((key) => key !== "key")
+      .forEach((key) => {
+        const { type } = properties[key];
+        result[key] = properties[key][type];
+      });
 
-  const SortingBar = styled.div``;
+    return result;
+  };
 
-  return <div>List</div>;
+  console.log(expenditureList);
+
+  console.log(data);
+  return (
+    <CardList>
+      {isLoading
+        ? "Loading ..."
+        : expenditureList.map((card) => {
+            return <Card key={card.id} {...card} />;
+          })}
+    </CardList>
+  );
 };
 
 export default List;
