@@ -2,10 +2,11 @@ import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { getExpenditureList } from "../api";
-import { expenditureListAtom } from "../atoms";
+import { getExpenditureList } from "../data/api";
+import { expenditureListAtom } from "../data/atoms";
 
 import Card from "../components/Card";
+import { settingProperties } from "../data/property";
 
 const CardList = styled.ul``;
 
@@ -29,28 +30,12 @@ const List = () => {
   // type
   // date, created_time, select, rich_text, title
   // number
-
-  const settingProperties = (properties) => {
-    const keys = Object.keys(properties);
-    let result = {};
-    keys
-      .filter((key) => key !== "key")
-      .forEach((key) => {
-        const { type } = properties[key];
-        result[key] = properties[key][type];
-      });
-
-    return result;
-  };
-
   console.log(expenditureList);
-
-  console.log(data);
   return (
     <CardList>
       {isLoading
         ? "Loading ..."
-        : expenditureList.map((card) => {
+        : expenditureList?.map((card) => {
             return <Card key={card.id} {...card} />;
           })}
     </CardList>
