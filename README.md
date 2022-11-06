@@ -27,7 +27,8 @@
 - React.js
 - javascript
 - styled-component
-- redux-toolkit
+- react-query
+- recoil
 - react-router
 
 4. component

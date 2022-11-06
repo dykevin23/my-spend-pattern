@@ -1,4 +1,4 @@
-import { Types } from "./enums";
+import { Types } from "../data/enums";
 
 export const settingProperties = (properties) => {
   const keys = Object.keys(properties);
@@ -14,7 +14,7 @@ export const settingProperties = (properties) => {
 };
 
 const getValueByPropertyTypes = (type, data) => {
-  console.log(type, data);
+  // console.log(type, data);
   switch (type) {
     case Types.select:
       return data?.name;

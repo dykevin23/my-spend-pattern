@@ -6,7 +6,7 @@ import { getExpenditureList } from "../data/api";
 import { expenditureListAtom } from "../data/atoms";
 
 import Card from "../components/Card";
-import { settingProperties } from "../data/property";
+import { settingProperties } from "../utils/property";
 
 const CardList = styled.ul``;
 
