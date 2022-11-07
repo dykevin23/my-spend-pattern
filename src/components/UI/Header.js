@@ -20,6 +20,12 @@ const Header = () => {
       <Link className={pathname === "/" ? "active" : ""} to="/">
         Home
       </Link>
+      <Link
+        className={pathname.includes("/accountBook") ? "active" : ""}
+        to="/accountBook"
+      >
+        Account
+      </Link>
       <Link className={pathname === "/list" ? "active" : ""} to="/list">
         List
       </Link>

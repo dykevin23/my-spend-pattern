@@ -12,7 +12,7 @@
 
 2.  내역(토스)
 
-[ ] 탭구조(소비/수입)
+[✓] 탭구조(소비/수입)
 
 2-1. 소비(1depth)
 
@@ -57,14 +57,14 @@
    1)app => IOS, Andriod
    2)pc
 
-6. 기술셋
+6. skills
 
 - React.js
 - javascript
 - styled-component
 - react-query
 - recoil
-- react-router
+- react-router(v6)
 
 4. component
 
