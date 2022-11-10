@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { spendSearchConditionAtom } from "../data/atoms/spend";
@@ -13,10 +13,17 @@ const SelectButton = styled.span``;
 
 const SelectMonth = ({ today, month, type = "" }) => {
   const setSearchCondition = useSetRecoilState(spendSearchConditionAtom);
-  const [isPrevDisabled, setIsPrevDisabled] = useState();
-  const [isNextDisabled, setIsNextDisabled] = useState(
-    new Date(today).getMonth + 1 === month[0]
+  const [isPrevDisabled, setIsPrevDisabled] = useState(
+    month[0] === 9 && month[1] === 2022
   );
+  const [isNextDisabled, setIsNextDisabled] = useState(
+    new Date(today).getMonth() + 1 === month[0]
+  );
+
+  useEffect(() => {
+    setIsPrevDisabled(month[0] === 9 && month[1] === 2022);
+    setIsNextDisabled(new Date(today).getMonth() + 1 === month[0]);
+  }, [month, today]);
 
   const getMonth = (months, today) => {
     const [month, year] = months;
@@ -53,9 +60,10 @@ const SelectMonth = ({ today, month, type = "" }) => {
   };
 
   return (
-    // ◀︎ ◁ ▶︎ ▷
     <Wrapper>
-      <SelectButton onClick={() => handleMonth(month, -1)}>◀︎</SelectButton>
+      <SelectButton onClick={() => !isPrevDisabled && handleMonth(month, -1)}>
+        {isPrevDisabled ? "◁" : "◀︎"}
+      </SelectButton>
       <Month>{getMonth(month, today)}</Month>
       <SelectButton onClick={() => !isNextDisabled && handleMonth(month, +1)}>
         {isNextDisabled ? "▷" : "▶︎"}

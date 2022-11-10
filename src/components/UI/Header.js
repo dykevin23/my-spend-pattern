@@ -22,7 +22,7 @@ const Header = () => {
       </Link>
       <Link
         className={pathname.includes("/accountBook") ? "active" : ""}
-        to="/accountBook"
+        to="/accountBook/spend"
       >
         Account
       </Link>
