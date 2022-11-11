@@ -5,6 +5,7 @@ import { spendSearchConditionAtom } from "../data/atoms/spend";
 
 const Wrapper = styled.div`
   display: flex;
+  padding-top: 20px;
   padding-left: 20px;
   gap: 20px;
 `;
