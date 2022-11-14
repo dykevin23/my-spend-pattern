@@ -2,6 +2,7 @@ import { Link, Route, Routes, useMatch } from "react-router-dom";
 import styled, { css } from "styled-components";
 import Income from "./Income";
 import Spend from "./Spend";
+import SpendList from "./SpendList";
 
 const Tabs = styled.div`
   display: grid;
@@ -27,20 +28,25 @@ const Tab = styled.span`
 `;
 
 const AccountBook = () => {
+  const spendMatch = useMatch("/accountBook/spend");
+  const incomeMatch = useMatch("/accountBook/income");
   return (
     <>
-      <Tabs>
-        <Tab isActive={useMatch("/accountBook/spend")}>
-          <Link to="spend">소비</Link>
-        </Tab>
-        <Tab isActive={useMatch("/accountBook/income")}>
-          <Link to="income">수입</Link>
-        </Tab>
-      </Tabs>
+      {(spendMatch || incomeMatch) && (
+        <Tabs>
+          <Tab isActive={spendMatch}>
+            <Link to="spend">소비</Link>
+          </Tab>
+          <Tab isActive={incomeMatch}>
+            <Link to="income">수입</Link>
+          </Tab>
+        </Tabs>
+      )}
 
       <Routes>
         <Route path="spend" element={<Spend />} />
         <Route path="income" element={<Income />} />
+        <Route path="spend/list" element={<SpendList />} />
       </Routes>
     </>
   );

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Link, useLocation } from "react-router-dom";
 
-const StyledHeader = styled.div`
+const Wrapper = styled.div`
   display: flex;
   gap: 5px;
   height: 30px;
@@ -16,7 +16,7 @@ const Header = () => {
   const { pathname } = useLocation();
 
   return (
-    <StyledHeader>
+    <Wrapper>
       <Link className={pathname === "/" ? "active" : ""} to="/">
         Home
       </Link>
@@ -35,7 +35,7 @@ const Header = () => {
       <Link className={pathname === "/charts" ? "active" : ""} to="/charts">
         Charts
       </Link>
-    </StyledHeader>
+    </Wrapper>
   );
 };
 

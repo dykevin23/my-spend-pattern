@@ -16,3 +16,10 @@ export const getSearchDateRange = (month) => {
     },
   ];
 };
+
+export const getDayOfWeek = (date) => {
+  const weekName = ["일", "월", "화", "수", "목", "금", "토"];
+  const dateObject = new Date(date);
+
+  return `${dateObject.getDate()}일 ${weekName[dateObject.getDay()]}요일`;
+};

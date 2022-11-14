@@ -10,13 +10,15 @@ export const spendSearchConditionAtom = atom({
 
 export const spendListAtom = atom({
   key: "spendList",
-  default: [],
+  default: {},
 });
 
 export const totalSpendCostSelector = selector({
   key: "totalSpendCost",
   get: ({ get }) => {
-    const list = get(spendListAtom) || [];
+    const { month } = get(spendSearchConditionAtom);
+    const spendData = get(spendListAtom) || {};
+    const list = spendData[[...month].reverse().join("")] || [];
     return list.length > 0
       ? list?.map((item) => item.withdraw).reduce((a, b) => a + b)
       : 0;
@@ -26,20 +28,34 @@ export const totalSpendCostSelector = selector({
 export const spendTypeListSelector = selector({
   key: "spendTypeList",
   get: ({ get }) => {
-    const list = get(spendListAtom) || [];
-    const types = [...new Set(list.map((item) => item.detailWay))];
-
+    const spendData = get(spendListAtom) || {};
     let result = {};
-    types.forEach((type) => {
-      const dataList = list.filter((item) => item.detailWay === type);
-      result[type] = {
-        detailWayName: Enums.DETAILWAY.find((item) => item.code === type).value,
-        totalPrice: dataList
-          .map((item) => item.withdraw)
-          .reduce((a, b) => a + b),
-        data: dataList,
-      };
-    });
+
+    if (Object.keys(spendData).length > 0) {
+      Object.keys(spendData).forEach((key) => {
+        const types = [
+          ...new Set(spendData[key].map((item) => item.detailWay)),
+        ];
+
+        let typeData = {};
+        types.forEach((type) => {
+          const dataList = spendData[key].filter(
+            (item) => item.detailWay === type
+          );
+          typeData[type] = {
+            detailWayName: Enums.DETAILWAY.find((item) => item.code === type)
+              .value,
+            totalPrice: dataList
+              .map((item) => item.withdraw)
+              .reduce((a, b) => a + b),
+            data: dataList,
+          };
+        });
+
+        result[key] = typeData;
+      });
+    }
+
     return result;
   },
 });

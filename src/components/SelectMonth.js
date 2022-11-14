@@ -1,19 +1,16 @@
 import { useEffect, useState } from "react";
-import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { spendSearchConditionAtom } from "../data/atoms/spend";
 
 const Wrapper = styled.div`
   display: flex;
-  padding-top: 20px;
-  padding-left: 20px;
+  justify-content: center;
+  align-items: center;
   gap: 20px;
 `;
 const Month = styled.span``;
 const SelectButton = styled.span``;
 
-const SelectMonth = ({ today, month, type = "" }) => {
-  const setSearchCondition = useSetRecoilState(spendSearchConditionAtom);
+const SelectMonth = ({ today, month, setMonth, type = "" }) => {
   const [isPrevDisabled, setIsPrevDisabled] = useState(
     month[0] === 9 && month[1] === 2022
   );
@@ -42,10 +39,9 @@ const SelectMonth = ({ today, month, type = "" }) => {
   };
 
   const handleMonth = (month, option) => {
-    setSearchCondition((prevState) => {
+    setMonth((prevState) => {
       const [prevMonth, prevYear] = prevState.month;
       const calResult = prevMonth + option;
-      console.log(prevState, month, month[0] + option);
       return {
         ...prevState,
         month: [
