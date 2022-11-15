@@ -31,11 +31,37 @@ const PreviousButton = styled.span`
   font-weight: 700;
 `;
 const Content = styled.div``;
-const Summary = styled.div``;
-const List = styled.ul``;
+const Summary = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+`;
+const SummaryInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`;
+const SummaryMark = styled.div`
+  width: 40px;
+  height: 60px;
+  background-color: #a29bfe;
+  /* margin-right: 10px; */
+`;
+const SummaryName = styled.span``;
+const SummaryPrice = styled.span`
+  font-size: 30px;
+  font-weight: 800;
+`;
+const List = styled.ul`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`;
 const Box = styled.li`
   display: flex;
-  background-color: "#b2bec3";
   gap: 10px;
   flex-direction: column;
   padding: 10px;
@@ -53,11 +79,10 @@ const spendCardVariants = {
   hover: { scale: 1.05, backgroundColor: "#f1f2f6" },
 };
 const SpendMark = styled.div`
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   background-color: #74b9ff;
   border-radius: 100%;
-  margin-left: 15px;
   margin-right: 10px;
 `;
 const SpendInfo = styled.div`
@@ -88,6 +113,8 @@ const SpendList = () => {
   const setSpendList = useSetRecoilState(spendListAtom);
   const [listByDate, setListByDate] = useState({});
   const [month, setMonth] = useState(monthAtom);
+  const [monthKey, setMonthKey] = useState([...month.month].reverse().join(""));
+  const [summaryInfo, setSummaryInfo] = useState({});
   const { data, refetch } = useQuery(
     "getSpendList",
     () => getSpendList({ month: month.month }),
@@ -97,10 +124,11 @@ const SpendList = () => {
   );
 
   useEffect(() => {
+    console.log(monthKey, data);
     setSpendList((prevState) => {
       return {
         ...prevState,
-        [[...month.month].reverse().join("")]:
+        [monthKey]:
           data?.results.map((item) => {
             return {
               id: item.id,
@@ -112,11 +140,14 @@ const SpendList = () => {
   }, [data]);
 
   useEffect(() => {
-    const list =
-      spendTypeList[[...month.month].reverse().join("")][type]?.data || [];
+    const {
+      detailWayName = "",
+      data = [],
+      totalPrice = 0,
+    } = spendTypeList[monthKey][type];
 
-    if (list.length > 0) {
-      const getDates = [...new Set(list.map((item) => item.date))].sort(
+    if (data.length > 0) {
+      const getDates = [...new Set(data.map((item) => item.date))].sort(
         (a, b) =>
           parseInt(b.replace(/[^0-9]/g, "")) -
           parseInt(a.replace(/[^0-9]/g, ""))
@@ -124,17 +155,23 @@ const SpendList = () => {
 
       let spendListByDate = {};
       getDates.forEach((date) => {
-        spendListByDate[date] = list.filter((item) => item.date === date);
+        spendListByDate[date] = data.filter((item) => item.date === date);
       });
-
       setListByDate(spendListByDate);
     } else {
       setListByDate({});
     }
+
+    setSummaryInfo({
+      detailWayName,
+      data,
+      totalPrice,
+    });
   }, [type, spendTypeList]);
 
   useEffect(() => {
     refetch(month.month);
+    setMonthKey([...month.month].reverse().join(""));
   }, [month]);
 
   return (
@@ -145,7 +182,13 @@ const SpendList = () => {
         <div></div>
       </Header>
       <Content>
-        <Summary></Summary>
+        <Summary>
+          <SummaryInfo>
+            <SummaryName>{summaryInfo.detailWayName}</SummaryName>
+            <SummaryPrice>{summaryInfo.totalPrice} 원</SummaryPrice>
+          </SummaryInfo>
+          <SummaryMark></SummaryMark>
+        </Summary>
         <List>
           {Object.keys(listByDate).map((date) => {
             const list = listByDate[date];

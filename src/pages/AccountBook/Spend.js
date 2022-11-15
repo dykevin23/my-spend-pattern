@@ -4,7 +4,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import Cost from "../../components/Cost";
 import SelectMonth from "../../components/SelectMonth";
-import SpendTypes from "../../components/UI/SpendTypes";
+import SpendTypes from "../../components/accountBook/SpendTypes";
 import { getSpendList } from "../../data/api";
 import { todayAtom } from "../../data/atoms/common";
 import {
