@@ -9,22 +9,22 @@ export const TYPES = {
 Object.freeze(TYPES);
 
 export const MAINCATEGORY = [
-  { code: "home", value: "주거비용" },
-  { code: "insurance", value: "보험" },
-  { code: "saving", value: "저축" },
-  { code: "investment", value: "투자" },
-  { code: "mobile", value: "통신비" },
-  { code: "parent", value: "부모" },
-  { code: "living", value: "생활비" },
-  { code: "food", value: "식비" },
-  { code: "baby", value: "육아비용" },
-  { code: "traffic", value: "차량/교통" },
-  { code: "individual", value: "개인비용" },
-  { code: "hospital", value: "병원비" },
-  { code: "culture", value: "문화생활" },
-  { code: "travel", value: "여행" },
-  { code: "ceremony", value: "경조사" },
-  { code: "etc", value: "기타" },
+  { code: "home", value: "주거비용", color: "#c0392b" },
+  { code: "insurance", value: "보험", color: "#d35400" },
+  { code: "saving", value: "저축", color: "#f39c12" },
+  { code: "investment", value: "투자", color: "#f1c40f" },
+  { code: "mobile", value: "통신비", color: "#16a085" },
+  { code: "parent", value: "부모", color: "#1abc9c" },
+  { code: "living", value: "생활비", color: "#27ae60" },
+  { code: "food", value: "식비", color: "#2ecc71" },
+  { code: "baby", value: "육아비용", color: "#2980b9" },
+  { code: "traffic", value: "차량/교통", color: "#3498db" },
+  { code: "individual", value: "개인비용", color: "#8e44ad" },
+  { code: "hospital", value: "병원비", color: "#9b59b6" },
+  { code: "culture", value: "문화생활", color: "#2c3e50" },
+  { code: "travel", value: "여행", color: "#34495e" },
+  { code: "ceremony", value: "경조사", color: "#7f8c8d" },
+  { code: "etc", value: "기타", color: "#bdc3c7" },
 ];
 Object.freeze(MAINCATEGORY);
 

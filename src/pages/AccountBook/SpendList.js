@@ -15,6 +15,8 @@ import { todayAtom } from "../../data/atoms/common";
 import { useQuery } from "react-query";
 import { getSpendList } from "../../data/api";
 import { settingProperties } from "../../utils/property";
+import Tag from "../../components/Tag";
+import { MAINCATEGORY } from "../../data/enums";
 
 const Wrapper = styled.div``;
 const Header = styled.div`
@@ -101,6 +103,10 @@ const SpendStore = styled.span`
   align-items: center;
 `;
 
+const TagArea = styled.div`
+  display: flex;
+`;
+
 const SpendList = () => {
   const {
     state: { type },
@@ -115,6 +121,9 @@ const SpendList = () => {
   const [month, setMonth] = useState(monthAtom);
   const [monthKey, setMonthKey] = useState([...month.month].reverse().join(""));
   const [summaryInfo, setSummaryInfo] = useState({});
+  const [mainCategoryTags, setMainCategoryTags] = useState([]);
+  const [selectedTag, setSelectedTag] = useState("");
+
   const { data, refetch } = useQuery(
     "getSpendList",
     () => getSpendList({ month: month.month }),
@@ -124,7 +133,6 @@ const SpendList = () => {
   );
 
   useEffect(() => {
-    console.log(monthKey, data);
     setSpendList((prevState) => {
       return {
         ...prevState,
@@ -158,6 +166,11 @@ const SpendList = () => {
         spendListByDate[date] = data.filter((item) => item.date === date);
       });
       setListByDate(spendListByDate);
+
+      const mainCategorys = [...new Set(data.map((item) => item.mainCategory))];
+      setMainCategoryTags(
+        MAINCATEGORY.filter((item) => mainCategorys.includes(item.code))
+      );
     } else {
       setListByDate({});
     }
@@ -189,10 +202,29 @@ const SpendList = () => {
           </SummaryInfo>
           <SummaryMark></SummaryMark>
         </Summary>
+
+        <TagArea>
+          {[{ code: "", value: "전체", color: "black" }]
+            .concat(mainCategoryTags)
+            .map((category, index) => {
+              return (
+                <Tag
+                  isActive={selectedTag === category.code}
+                  key={index}
+                  name={category.value}
+                  {...category}
+                  onClick={() => setSelectedTag(category.code)}
+                />
+              );
+            })}
+        </TagArea>
+
         <List>
           {Object.keys(listByDate).map((date) => {
-            const list = listByDate[date];
-            return (
+            const list = listByDate[date].filter((item) =>
+              selectedTag === "" ? item : item.mainCategory === selectedTag
+            );
+            return list.length > 0 ? (
               <Box key={date}>
                 <DateInfo>{getDayOfWeek(date)}</DateInfo>
                 {list.map((item) => {
@@ -211,7 +243,7 @@ const SpendList = () => {
                   );
                 })}
               </Box>
-            );
+            ) : null;
           })}
         </List>
       </Content>
