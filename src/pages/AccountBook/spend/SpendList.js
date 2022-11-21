@@ -17,6 +17,7 @@ import { getSpendList } from "data/api";
 import { settingProperties } from "utils/property";
 import Tag from "components/Tag";
 import { MAINCATEGORY } from "data/enums";
+import Summary from "components/accountBook/Summary";
 
 const Wrapper = styled.div``;
 const Header = styled.div`
@@ -33,30 +34,7 @@ const PreviousButton = styled.span`
   font-weight: 700;
 `;
 const Content = styled.div``;
-const Summary = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  margin-left: 10px;
-  margin-right: 10px;
-`;
-const SummaryInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-`;
-const SummaryMark = styled.div`
-  width: 40px;
-  height: 60px;
-  background-color: #a29bfe;
-  /* margin-right: 10px; */
-`;
-const SummaryName = styled.span``;
-const SummaryPrice = styled.span`
-  font-size: 30px;
-  font-weight: 800;
-`;
+
 const List = styled.ul`
   display: flex;
   flex-direction: column;
@@ -197,14 +175,7 @@ const SpendList = () => {
         <div></div>
       </Header>
       <Content>
-        <Summary>
-          <SummaryInfo>
-            <SummaryName>{summaryInfo.detailWayName}</SummaryName>
-            <SummaryPrice>{summaryInfo.totalPrice} 원</SummaryPrice>
-          </SummaryInfo>
-          <SummaryMark></SummaryMark>
-        </Summary>
-
+        <Summary {...summaryInfo} />
         <TagArea>
           {[{ code: "", value: "전체", color: "black" }]
             .concat(mainCategoryTags)

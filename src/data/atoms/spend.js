@@ -1,5 +1,5 @@
 import { atom, selector } from "recoil";
-import * as Enums from "enums";
+import * as Enums from "data/enums";
 
 export const spendSearchConditionAtom = atom({
   key: "spendSearchCondition",
