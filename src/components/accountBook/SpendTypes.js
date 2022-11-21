@@ -3,7 +3,7 @@ import styled from "styled-components";
 import {
   spendSearchConditionAtom,
   spendTypeListSelector,
-} from "../../data/atoms/spend";
+} from "data/atoms/spend";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";

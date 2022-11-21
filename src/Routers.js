@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./components/UI/Layout";
-import AccountBook from "./pages/AccountBook";
+import AccountBook from "./pages/accountBook";
 import Charts from "./pages/Charts";
 import Form from "./pages/Form";
 import Home from "./pages/Home";

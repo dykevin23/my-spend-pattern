@@ -2,17 +2,18 @@ import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import Cost from "../../components/Cost";
-import SelectMonth from "../../components/SelectMonth";
-import SpendTypes from "../../components/accountBook/SpendTypes";
-import { getSpendList } from "../../data/api";
-import { todayAtom } from "../../data/atoms/common";
+
+import Cost from "components/Cost";
+import SelectMonth from "components/SelectMonth";
+import SpendTypes from "components/accountBook/SpendTypes";
+import { getSpendList } from "data/api";
+import { todayAtom } from "data/atoms/common";
 import {
   spendListAtom,
   spendSearchConditionAtom,
   totalSpendCostSelector,
-} from "../../data/atoms/spend";
-import { settingProperties } from "../../utils/property";
+} from "data/atoms/spend";
+import { settingProperties } from "utils/property";
 
 const Wrapper = styled.div`
   display: flex;

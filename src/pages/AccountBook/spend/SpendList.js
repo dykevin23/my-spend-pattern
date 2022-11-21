@@ -7,16 +7,16 @@ import {
   spendListAtom,
   spendSearchConditionAtom,
   spendTypeListSelector,
-} from "../../data/atoms/spend";
-import { getDayOfWeek } from "../../utils";
+} from "data/atoms/spend";
+import { getDayOfWeek } from "utils";
 import { motion } from "framer-motion";
-import SelectMonth from "../../components/SelectMonth";
-import { todayAtom } from "../../data/atoms/common";
+import SelectMonth from "components/SelectMonth";
+import { todayAtom } from "data/atoms/common";
 import { useQuery } from "react-query";
-import { getSpendList } from "../../data/api";
-import { settingProperties } from "../../utils/property";
-import Tag from "../../components/Tag";
-import { MAINCATEGORY } from "../../data/enums";
+import { getSpendList } from "data/api";
+import { settingProperties } from "utils/property";
+import Tag from "components/Tag";
+import { MAINCATEGORY } from "data/enums";
 
 const Wrapper = styled.div``;
 const Header = styled.div`

@@ -2,11 +2,11 @@ import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { getExpenditureList } from "../data/api";
-import { expenditureListAtom } from "../data/atoms";
+import { getExpenditureList } from "data/api";
+import { expenditureListAtom } from "data/atoms";
 
-import Card from "../components/Card";
-import { settingProperties } from "../utils/property";
+import Card from "components/Card";
+import { settingProperties } from "utils/property";
 
 const CardList = styled.ul``;
 

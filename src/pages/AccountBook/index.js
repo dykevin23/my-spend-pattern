@@ -1,8 +1,8 @@
 import { Link, Route, Routes, useMatch } from "react-router-dom";
 import styled, { css } from "styled-components";
-import Income from "./Income";
-import Spend from "./Spend";
-import SpendList from "./SpendList";
+import Income from "./income";
+import Spend from "./spend";
+import SpendList from "./spend/SpendList";
 
 const Tabs = styled.div`
   display: grid;

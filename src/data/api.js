@@ -1,5 +1,5 @@
-import { getSearchDateRange } from "../utils";
-import { callApi } from "../utils/axios";
+import { getSearchDateRange } from "utils";
+import { callApi } from "utils/axios";
 
 export const getSpendList = async (params) => {
   const { month } = params;
