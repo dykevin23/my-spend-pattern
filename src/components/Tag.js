@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const Wrapper = styled.span`
+  display: inline-block;
   background-color: ${(props) => (props.isActive ? props.color : "white")};
   color: ${(props) => (props.isActive ? "white" : props.color)};
   border-color: black;

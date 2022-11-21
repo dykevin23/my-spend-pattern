@@ -105,6 +105,8 @@ const SpendStore = styled.span`
 
 const TagArea = styled.div`
   display: flex;
+  overflow-x: scroll;
+  white-space: nowrap;
 `;
 
 const SpendList = () => {
