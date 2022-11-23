@@ -55,8 +55,11 @@ const SpendTypes = () => {
   };
 
   useEffect(() => {
-    setMonthKey([...month].reverse().join(""));
-  }, [month]);
+    const monthStr = [...month].reverse().join("");
+    if (Object.keys(spendTypeList).includes(monthStr)) {
+      setMonthKey(monthStr);
+    }
+  }, [month, spendTypeList]);
 
   return (
     <Wrapper>

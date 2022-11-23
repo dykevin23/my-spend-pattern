@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useQuery } from "react-query";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
 import Cost from "components/Cost";
@@ -23,24 +23,30 @@ const Wrapper = styled.div`
 
 const Spend = () => {
   const today = useRecoilValue(todayAtom);
-  const { month } = useRecoilValue(spendSearchConditionAtom);
+  // const { month } = useRecoilValue(spendSearchConditionAtom);
   const setSpendList = useSetRecoilState(spendListAtom);
   const totalSpendCost = useRecoilValue(totalSpendCostSelector);
-  const setSearchCondition = useSetRecoilState(spendSearchConditionAtom);
+  // const setSearchCondition = useSetRecoilState(spendSearchConditionAtom);
+
+  const [searchCondition, setSearchCondition] = useRecoilState(
+    spendSearchConditionAtom
+  );
+
   const { isLoading, data, refetch } = useQuery("getSpendList", () =>
-    getSpendList({ month })
+    getSpendList({ month: searchCondition.month })
   );
 
   useEffect(() => {
     refetch();
-  }, [month]);
+  }, [searchCondition]);
 
   useEffect(() => {
-    if (month.length > 0) {
+    console.log("### data => ", data, searchCondition);
+    if (searchCondition.month.length > 0) {
       setSpendList((prevState) => {
         return {
           ...prevState,
-          [[...month].reverse().join("")]:
+          [[...searchCondition.month].reverse().join("")]:
             data?.results.map((item) => {
               return {
                 id: item.id,
@@ -57,7 +63,7 @@ const Spend = () => {
       <Wrapper>
         <SelectMonth
           today={today}
-          month={month}
+          month={searchCondition.month}
           setMonth={setSearchCondition}
           type="spend"
         />

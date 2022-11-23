@@ -2,6 +2,7 @@ import { Link, Route, Routes, useMatch } from "react-router-dom";
 import styled, { css } from "styled-components";
 import Income from "./income";
 import Spend from "./spend";
+import Detail from "./spend/Detail";
 import SpendList from "./spend/SpendList";
 
 const Tabs = styled.div`
@@ -47,6 +48,7 @@ const AccountBook = () => {
         <Route path="spend" element={<Spend />} />
         <Route path="income" element={<Income />} />
         <Route path="spend/list" element={<SpendList />} />
+        <Route path="spend/:type/:id" element={<Detail />} />
       </Routes>
     </>
   );

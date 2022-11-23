@@ -1,4 +1,4 @@
-import { atom, selector } from "recoil";
+import { atom, selector, selectorFamily } from "recoil";
 import * as Enums from "data/enums";
 
 export const spendSearchConditionAtom = atom({
@@ -58,4 +58,18 @@ export const spendTypeListSelector = selector({
 
     return result;
   },
+});
+
+export const spendDetailSelector = selectorFamily({
+  key: "spendDetail",
+  get:
+    ({ type, id }) =>
+    ({ get }) => {
+      const { month } = get(spendSearchConditionAtom);
+      const data = get(spendTypeListSelector);
+
+      const monthStr = [...month].reverse().join("");
+      const monthSpendList = data[monthStr][type]?.data || [];
+      return monthSpendList.find((item) => item.id);
+    },
 });

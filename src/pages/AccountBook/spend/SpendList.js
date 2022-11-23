@@ -167,6 +167,10 @@ const SpendList = () => {
     setMonthKey([...month.month].reverse().join(""));
   }, [month]);
 
+  const handleSpendCardClick = (id) => {
+    navigate(`../spend/${type}/${id}`);
+  };
+
   return (
     <Wrapper>
       <Header>
@@ -206,6 +210,7 @@ const SpendList = () => {
                       key={item.id}
                       variants={spendCardVariants}
                       whileHover="hover"
+                      onClick={() => handleSpendCardClick(item.id)}
                     >
                       <SpendMark></SpendMark>
                       <SpendInfo>
