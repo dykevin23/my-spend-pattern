@@ -1,23 +1,35 @@
-import { spendDetailSelector } from "data/atoms/spend";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import { getSpendList3MonthById } from "data/api";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+
+import { spendDetailSelector } from "data/atoms/spend";
+import { getSpendList3MonthById } from "data/api";
 import { settingProperties } from "utils/property";
-import { useState } from "react";
+import DetailInfo from "components/accountBook/DetailInfo";
 
 const Wrapper = styled.div``;
-const Header = styled.div``;
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin-top: 5px;
+`;
+const PreviousButton = styled.span`
+  display: flex;
+  font-size: 20px;
+  font-weight: 700;
+`;
+const Title = styled.span``;
 const Content = styled.div``;
-const DetailInfo = styled.div``;
-
 // TODO
 const RecentHistory = styled.div``;
 
 const Detail = () => {
   const { type, id } = useParams();
+  const navigate = useNavigate();
   const spendInfo = useRecoilValue(spendDetailSelector({ type, id }));
   const [recentHistory, setRecentHistory] = useState([]);
 
@@ -41,9 +53,13 @@ const Detail = () => {
 
   return (
     <Wrapper>
-      <Header></Header>
+      <Header>
+        <PreviousButton onClick={() => navigate(-1)}>{"<"}</PreviousButton>
+        <Title>상세내역</Title>
+        <div></div>
+      </Header>
       <Content>
-        <DetailInfo></DetailInfo>
+        <DetailInfo {...spendInfo} />
         {/* TODO */}
         <RecentHistory></RecentHistory>
       </Content>

@@ -4,7 +4,6 @@ import { MAINCATEGORY, SUBCATEGORY } from "./enums";
 
 export const getSpendList = async (params) => {
   const { month } = params;
-  console.log("### getSpendList => ", month);
   const { data } = await callApi({
     url: "/spendList",
     paramObject: {
