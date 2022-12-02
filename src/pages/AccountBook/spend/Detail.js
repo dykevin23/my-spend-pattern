@@ -3,8 +3,8 @@ import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 import { spendDetailSelector } from "data/atoms/spend";
-import DetailInfo from "components/accountBook/DetailInfo";
-import RecentSpendHistory from "components/accountBook/RecentSpendHistory";
+import DetailInfo from "component/accountBook/DetailInfo";
+import RecentSpendHistory from "component/accountBook/RecentSpendHistory";
 
 const Wrapper = styled.div``;
 const Header = styled.div`

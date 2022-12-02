@@ -25,8 +25,8 @@ export const totalSpendCostSelector = selector({
   },
 });
 
-export const spendTypeListSelector = selector({
-  key: "spendTypeList",
+export const payMethodListSelector = selector({
+  key: "payMethodList",
   get: ({ get }) => {
     const spendData = get(spendListAtom) || {};
     let result = {};
@@ -66,7 +66,7 @@ export const spendDetailSelector = selectorFamily({
     ({ type, id }) =>
     ({ get }) => {
       const { month } = get(spendSearchConditionAtom);
-      const data = get(spendTypeListSelector);
+      const data = get(payMethodListSelector);
 
       const monthStr = [...month].reverse().join("");
       const monthSpendList = data[monthStr][type]?.data || [];

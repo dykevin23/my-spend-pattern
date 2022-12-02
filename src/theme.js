@@ -1,4 +1,10 @@
 export const theme = {
-  bgColor: "#2f3640",
-  textColor: "#f5f6fa",
+  bgColor: {
+    primary: "#ecf0f1",
+    sub: "#34495e",
+  },
+  txtColor: {
+    primary: "#2c3e50",
+    sub: "#8395a7",
+  },
 };

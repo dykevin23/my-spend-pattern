@@ -1,6 +1,6 @@
+import { MAINCATEGORY, SUBCATEGORY } from "data/enums";
 import { getSearchDateRange, get3MonthRange } from "utils";
 import { callApi } from "utils/axios";
-import { MAINCATEGORY, SUBCATEGORY } from "./enums";
 
 export const getSpendList = async (params) => {
   const { month } = params;
@@ -46,15 +46,6 @@ export const getSpendList3MonthById = async (params) => {
         ],
       },
     },
-  });
-
-  return data;
-};
-
-export const getExpenditureList = async (params) => {
-  const { data } = await callApi({
-    url: "/list",
-    paramObject: params,
   });
 
   return data;

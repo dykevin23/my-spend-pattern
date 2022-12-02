@@ -76,21 +76,23 @@ const RecentSpendHistory = ({ mainCategory, subCategory, store }) => {
     );
   }, [data]);
 
-  return (
+  return isLoading ? (
     <Wrapper>
       <OverviewInfo>
         <OverviewTitle>최근 3개월간 거래 내역</OverviewTitle>
         <OverviewGroup>
           <Overview>
             <OverviewTr>거래 횟수</OverviewTr>
-            <OverviewTd>{recentHistory.length} 회</OverviewTd>
+            <OverviewTd>{recentHistory?.length || 0} 회</OverviewTd>
           </Overview>
           <Overview>
             <OverviewTr>총 금액</OverviewTr>
             <OverviewTd>
-              {`- ${recentHistory
-                .map((item) => item.withdraw)
-                .reduce((a, b) => Number(a) + Number(b), [])} 원`}
+              {`- ${
+                recentHistory
+                  ?.map((item) => item.withdraw)
+                  .reduce((a, b) => Number(a) + Number(b), []) || 0
+              } 원`}
             </OverviewTd>
           </Overview>
         </OverviewGroup>
@@ -109,7 +111,7 @@ const RecentSpendHistory = ({ mainCategory, subCategory, store }) => {
         })}
       </List>
     </Wrapper>
-  );
+  ) : null;
 };
 
 export default RecentSpendHistory;
