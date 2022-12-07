@@ -1,66 +1,48 @@
-import { getSpendList3MonthById } from "data/api";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
-import { settingProperties } from "utils/property";
 
-const Wrapper = styled.div`
-  background-color: white;
-`;
+import { getSpendRecentHistory } from "api/spend";
+import { settingProperties } from "utils/property";
+import Spend from "./Spend";
+
+const Wrapper = styled.div``;
 const OverviewInfo = styled.div`
   margin: 10px;
-  padding: 20px;
 `;
-const OverviewTitle = styled.span`
-  font-size: 20px;
-`;
+const OverviewTitle = styled.span``;
 const OverviewGroup = styled.div`
   display: flex;
   justify-content: space-around;
-  margin-top: 20px;
+  margin-top: 10px;
+  padding: 10px;
 `;
 const Overview = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  gap: 5px;
-`;
-const OverviewTr = styled.span``;
-const OverviewTd = styled.span`
-  font-weight: 700;
-`;
-
-const List = styled.ul``;
-const SpendCard = styled.div`
-  display: flex;
-  align-items: center;
-  margin-left: 10px;
-  padding: 10px;
   gap: 10px;
 `;
-const CardMark = styled.div`
-  width: 40px;
-  height: 40px;
-  border-radius: 100%;
-  background-color: #3498db;
-`;
-const CardContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-`;
-const Price = styled.span`
-  font-size: 18px;
-`;
-const Store = styled.span`
+const OverviewTr = styled.span`
   font-size: 14px;
+  color: ${(props) => props.theme.txtColor.sub};
+`;
+const OverviewTd = styled.span`
+  font-size: 18px;
+  font-weight: 600;
 `;
 
-const RecentSpendHistory = ({ mainCategory, subCategory, store }) => {
+const HistoryList = styled.ul`
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  gap: 10px;
+`;
+
+const RecentHistory = ({ mainCategory, subCategory, store }) => {
   const [recentHistory, setRecentHistory] = useState([]);
-  const { isLoading, data } = useQuery("getSpendList3MonthById", () =>
-    getSpendList3MonthById({ mainCategory, subCategory })
+  const { isLoading, data } = useQuery("getSpendRecentHistory", () =>
+    getSpendRecentHistory({ mainCategory, subCategory })
   );
 
   useEffect(() => {
@@ -76,7 +58,7 @@ const RecentSpendHistory = ({ mainCategory, subCategory, store }) => {
     );
   }, [data]);
 
-  return isLoading ? (
+  return !isLoading ? (
     <Wrapper>
       <OverviewInfo>
         <OverviewTitle>최근 3개월간 거래 내역</OverviewTitle>
@@ -97,21 +79,14 @@ const RecentSpendHistory = ({ mainCategory, subCategory, store }) => {
           </Overview>
         </OverviewGroup>
       </OverviewInfo>
-      <List>
-        {recentHistory.map((spend) => {
-          return (
-            <SpendCard key={spend.id}>
-              <CardMark></CardMark>
-              <CardContent>
-                <Price>{`- ${spend.withdraw} 원`}</Price>
-                <Store>{spend.store}</Store>
-              </CardContent>
-            </SpendCard>
-          );
+      <hr />
+      <HistoryList>
+        {recentHistory.map((spend, index) => {
+          return <Spend key={spend?.id} {...spend} />;
         })}
-      </List>
+      </HistoryList>
     </Wrapper>
   ) : null;
 };
 
-export default RecentSpendHistory;
+export default RecentHistory;

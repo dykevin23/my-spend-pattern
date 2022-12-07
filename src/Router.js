@@ -32,7 +32,10 @@ const router = createBrowserRouter([
           {
             path: "spendList/:month/:payMethod",
             element: <SpendList />,
-            children: [{ path: ":id", element: <SpendDetail /> }],
+          },
+          {
+            path: "spendList/:month/:payMethod/:id",
+            element: <SpendDetail />,
           },
         ],
       },

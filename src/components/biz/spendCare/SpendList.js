@@ -1,14 +1,8 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
-import {
-  Outlet,
-  useNavigate,
-  useOutletContext,
-  useParams,
-} from "react-router-dom";
+import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { motion } from "framer-motion";
 
 import SelectMonth from "components/common/SelectMonth";
 import Tag from "components/ui/Tag";
@@ -21,6 +15,7 @@ import { MAINCATEGORY } from "data/enums";
 import { getDayOfWeek } from "utils";
 import { settingProperties } from "utils/property";
 import { getSpendList } from "api/spend";
+import Spend from "./Spend";
 
 const Wrapper = styled.div``;
 
@@ -78,28 +73,6 @@ const Box = styled.li`
   padding: 10px;
 `;
 const DateInfo = styled.span``;
-const SpendItem = styled(motion.div)`
-  display: flex;
-  align-items: center;
-`;
-const itemVariants = {
-  tap: { scale: 1.05 },
-};
-const ItemMark = styled.svg`
-  width: 40px;
-  height: 40px;
-  background-color: #74b9ff;
-  border-radius: 100%;
-  margin-right: 10px;
-`;
-const ItemInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-const Store = styled.span`
-  font-size: 14px;
-  color: ${(props) => props.theme.txtColor.sub};
-`;
 
 const SpendList = () => {
   const { month: monthStr, payMethod } = useParams();
@@ -174,81 +147,70 @@ const SpendList = () => {
     refetch(month);
   }, [month]);
 
-  const handleSpendCardClick = (id) => {
-    navigate(`${id}`);
+  const handleSpendCardClick = (item) => {
+    console.log(item);
+    navigate(`${item?.id}`, { state: { detail: item } });
   };
 
   return (
-    <>
-      <Wrapper>
-        <Header>
-          <PreviousButton onClick={() => navigate(-1)}>{"<"}</PreviousButton>
-          <SelectMonth
-            today={today}
-            month={month}
-            setMonth={setSearchCondition}
-            type="spend"
-          />
-          <div />
-        </Header>
-        <Content>
-          <Summary>
-            <Info>
-              <Name>{summaryInfo?.detailWayName}</Name>
-              <Cost>{summaryInfo?.totalPrice} 원</Cost>
-            </Info>
-            <Mark></Mark>
-          </Summary>
-          <hr />
-          <TagArea>
-            {[{ code: "", value: "전체", color: "black" }]
-              .concat(mainCategoryTags)
-              .map((category, index) => {
-                return (
-                  <Tag
-                    isActive={selectedTag === category.code}
-                    key={index}
-                    name={category.value}
-                    {...category}
-                    onClick={() => setSelectedTag(category.code)}
-                  />
-                );
-              })}
-          </TagArea>
-          <Spends>
-            {Object.keys(spendDates).map((date) => {
-              const list = spendDates[date].filter((item) =>
-                selectedTag === "" ? item : item.mainCategory === selectedTag
+    <Wrapper>
+      <Header>
+        <PreviousButton onClick={() => navigate(-1)}>{"<"}</PreviousButton>
+        <SelectMonth
+          today={today}
+          month={month}
+          setMonth={setSearchCondition}
+          type="spend"
+        />
+        <div />
+      </Header>
+      <Content>
+        <Summary>
+          <Info>
+            <Name>{summaryInfo?.detailWayName}</Name>
+            <Cost>{summaryInfo?.totalPrice} 원</Cost>
+          </Info>
+          <Mark></Mark>
+        </Summary>
+        <hr />
+        <TagArea>
+          {[{ code: "", value: "전체", color: "black" }]
+            .concat(mainCategoryTags)
+            .map((category, index) => {
+              return (
+                <Tag
+                  isActive={selectedTag === category.code}
+                  key={index}
+                  name={category.value}
+                  {...category}
+                  onClick={() => setSelectedTag(category.code)}
+                />
               );
-              return list.length > 0 ? (
-                <Box key={date}>
-                  <DateInfo>{getDayOfWeek(date)}</DateInfo>
-                  {list.map((item) => {
-                    return (
-                      <SpendItem
-                        key={item.id}
-                        variants={itemVariants}
-                        whileTap="tap"
-                        onClick={() => handleSpendCardClick(item.id)}
-                      >
-                        <ItemMark></ItemMark>
-                        <ItemInfo>
-                          <Cost style={{ fontSize: "16px" }}>
-                            -{item.withdraw} 원
-                          </Cost>
-                          <Store>{item.store}</Store>
-                        </ItemInfo>
-                      </SpendItem>
-                    );
-                  })}
-                </Box>
-              ) : null;
             })}
-          </Spends>
-        </Content>
-      </Wrapper>
-      <Outlet />
-    </>
+        </TagArea>
+        <Spends>
+          {Object.keys(spendDates).map((date) => {
+            const list = spendDates[date].filter((item) =>
+              selectedTag === "" ? item : item.mainCategory === selectedTag
+            );
+            return list.length > 0 ? (
+              <Box key={date}>
+                <DateInfo>{getDayOfWeek(date)}</DateInfo>
+                {list.map((item) => {
+                  return (
+                    <Spend
+                      key={item?.id}
+                      {...item}
+                      onClick={handleSpendCardClick}
+                    />
+                  );
+                })}
+              </Box>
+            ) : null;
+          })}
+        </Spends>
+      </Content>
+    </Wrapper>
   );
 };
 

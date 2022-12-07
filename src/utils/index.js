@@ -60,3 +60,7 @@ export const getDayOfWeek = (date) => {
 
   return `${dateObject.getDate()}일 ${weekName[dateObject.getDay()]}요일`;
 };
+
+export const getCommonCodeValue = (list, code) => {
+  return list.find((item) => item.code === code)?.value || "";
+};

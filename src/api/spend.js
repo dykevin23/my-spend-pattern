@@ -16,7 +16,7 @@ export const getSpendList = async (params) => {
   return data;
 };
 
-export const getSpendList3MonthById = async (params) => {
+export const getSpendRecentHistory = async (params) => {
   const { mainCategory, subCategory } = params;
   const mainCategoryValue = MAINCATEGORY.find(
     (item) => item.code === mainCategory
