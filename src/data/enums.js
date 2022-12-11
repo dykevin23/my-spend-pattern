@@ -97,3 +97,8 @@ export const DETAILWAY = [
   { code: "zero", value: "제로페이", upperCode: "pay" },
 ];
 Object.freeze(DETAILWAY);
+
+export const FIXTYPE = [
+  { code: "fix", value: "고정지출" },
+  { code: "nonFix", value: "변동지출" },
+];

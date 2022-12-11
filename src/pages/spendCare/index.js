@@ -4,6 +4,7 @@ import { useRecoilValue } from "recoil";
 
 import { todayAtom } from "data/atoms/common";
 import { spendSearchConditionAtom } from "data/atoms/spend";
+import Header from "components/ui/Header";
 
 const SpendCare = () => {
   const today = useRecoilValue(todayAtom);
@@ -14,14 +15,17 @@ const SpendCare = () => {
   return (
     <>
       {(spendMatched || incomeMatched) && (
-        <Tabs>
-          <Tab isActive={spendMatched}>
-            <Link to="">소비</Link>
-          </Tab>
-          <Tab isActive={incomeMatched}>
-            <Link to="income">수입</Link>
-          </Tab>
-        </Tabs>
+        <>
+          <Header />
+          <Tabs>
+            <Tab isActive={spendMatched}>
+              <Link to="">소비</Link>
+            </Tab>
+            <Tab isActive={incomeMatched}>
+              <Link to="income">수입</Link>
+            </Tab>
+          </Tabs>
+        </>
       )}
       <Outlet context={[today, month]} />
     </>

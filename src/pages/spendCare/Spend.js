@@ -16,8 +16,13 @@ import {
 } from "data/atoms/spend";
 import { settingProperties } from "utils/property";
 import { getSpendList } from "api/spend";
+import FixedExpense from "components/biz/spendCare/FixedExpense";
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`;
 const SummaryInfo = styled.div`
   display: flex;
   flex-direction: column;
@@ -124,6 +129,9 @@ const Spend = () => {
               );
             })
           : null}
+      </Card>
+      <Card>
+        <FixedExpense />
       </Card>
     </Wrapper>
   );

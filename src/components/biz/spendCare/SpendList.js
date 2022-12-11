@@ -98,7 +98,7 @@ const SpendList = () => {
       return {
         ...prevState,
         [monthStr]:
-          data?.results.map((item) => {
+          data?.results?.map((item) => {
             return {
               id: item.id,
               ...settingProperties(item.properties),
@@ -148,8 +148,7 @@ const SpendList = () => {
   }, [month]);
 
   const handleSpendCardClick = (item) => {
-    console.log(item);
-    navigate(`${item?.id}`, { state: { detail: item } });
+    navigate(`/spendCare/spendDetail/${item?.id}`, { state: { detail: item } });
   };
 
   return (

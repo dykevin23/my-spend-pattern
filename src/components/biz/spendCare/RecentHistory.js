@@ -16,6 +16,8 @@ const OverviewGroup = styled.div`
   justify-content: space-around;
   margin-top: 10px;
   padding: 10px;
+  background-color: ${(props) => props.theme.bgColor.primary};
+  border-radius: 10px;
 `;
 const Overview = styled.div`
   display: flex;

@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import Card from "components/ui/Card";
-import { DETAILWAY, MAINCATEGORY, SUBCATEGORY } from "data/enums";
+import { DETAILWAY, FIXTYPE, MAINCATEGORY, SUBCATEGORY } from "data/enums";
 import { getCommonCodeValue } from "utils";
 import RecentHistory from "./RecentHistory";
 
@@ -112,7 +112,7 @@ const SpendDetail = () => {
             </Row>
             <Row>
               <Label>지출유형</Label>
-              <Value>{detail?.fixType}</Value>
+              <Value>{getCommonCodeValue(FIXTYPE, detail?.fixType)}</Value>
             </Row>
           </DetailInfo>
         </Card>

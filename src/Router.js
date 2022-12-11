@@ -34,7 +34,7 @@ const router = createBrowserRouter([
             element: <SpendList />,
           },
           {
-            path: "spendList/:month/:payMethod/:id",
+            path: "spendDetail/:id",
             element: <SpendDetail />,
           },
         ],

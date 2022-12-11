@@ -34,7 +34,6 @@ const Header = () => {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    console.log(location);
     setVisible(!location.pathname.includes("/spendList"));
   }, [location]);
   return visible ? (

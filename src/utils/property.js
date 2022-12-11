@@ -1,6 +1,5 @@
 import { TYPES } from "data/enums";
 import * as Enums from "data/enums";
-console.log(Object.keys(Enums));
 
 export const settingProperties = (properties) => {
   const keys = Object.keys(properties);
