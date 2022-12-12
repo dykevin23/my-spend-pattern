@@ -83,7 +83,7 @@ const RecentHistory = ({ mainCategory, subCategory, store }) => {
       </OverviewInfo>
       <hr />
       <HistoryList>
-        {recentHistory.map((spend, index) => {
+        {recentHistory?.map((spend, index) => {
           return <Spend key={spend?.id} {...spend} />;
         })}
       </HistoryList>
