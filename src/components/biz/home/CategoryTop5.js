@@ -1,9 +1,9 @@
-import { categoryTop5Selector } from "data/atoms/home";
-import { MAINCATEGORY } from "data/enums";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+
+import { categoryTop5Selector } from "data/atoms/home";
+import { MAINCATEGORY } from "data/enums";
 
 const Wrapper = styled.div`
   display: flex;
@@ -28,12 +28,13 @@ const Info = styled.div`
   display: flex;
   gap: 5px;
   align-items: center;
+  width: 60%;
 `;
 const Title = styled.span`
   font-size: 18px;
 `;
 const Percent = styled.span`
-  width: 150px;
+  /* width: 150px; */
   font-size: 14px;
   color: ${(props) => props.theme.txtColor.sub};
 `;

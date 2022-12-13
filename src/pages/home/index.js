@@ -47,6 +47,9 @@ const Home = () => {
         <Card>
           <CategoryTop5 />
         </Card>
+        <Card>
+          <FavoritesTop5 />
+        </Card>
         {/* <Card>
           <SpendSummary />
         </Card>
