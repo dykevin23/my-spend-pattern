@@ -44,3 +44,26 @@ export const favoritesTop5Selector = selector({
     return data.sort((a, b) => b.count - a.count);
   },
 });
+
+export const CostTop5Selector = selector({
+  key: "costTop5",
+  get: ({ get }) => {
+    const { month } = get(spendSearchConditionAtom);
+    const spendData = get(spendListAtom) || {};
+    const spendList = spendData[[...month].reverse().join("")] || [];
+
+    const sorting = spendList
+      .map((item) => {
+        return {
+          id: item.id,
+          withdraw: item.withdraw || 0,
+        };
+      })
+      .sort((a, b) => b.withdraw - a.withdraw)
+      .slice(0, 5);
+
+    return sorting.map((item) => {
+      return spendList.find((item2) => item2.id === item.id);
+    });
+  },
+});
