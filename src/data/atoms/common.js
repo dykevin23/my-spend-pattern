@@ -1,4 +1,5 @@
 import { atom } from "recoil";
+import { getMonth, getYear } from "utils";
 
 export const todayAtom = atom({
   key: "today",
@@ -8,4 +9,9 @@ export const todayAtom = atom({
 export const startMonthAtom = atom({
   key: "startMonth",
   default: "2022-09-01",
+});
+
+export const defaultMonthAtom = atom({
+  key: "defaultMont",
+  default: `${getYear()}${getMonth()}`,
 });

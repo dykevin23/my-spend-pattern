@@ -9,41 +9,48 @@ import { useQuery } from "react-query";
 import styled from "styled-components";
 import { getSpendList } from "api/spend";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { spendSearchConditionAtom, spendListAtom } from "data/atoms/spend";
+import { spendListAtom } from "data/atoms/spend";
 import { useEffect } from "react";
 import { settingProperties } from "utils/property";
+import { useState } from "react";
+import { defaultMonthAtom } from "data/atoms/common";
+import { getMonth, getYear } from "utils";
 
 const Wrapper = styled.div``;
 const Content = styled.div``;
 
 const Home = () => {
-  const { month } = useRecoilValue(spendSearchConditionAtom);
+  const defaultMonth = useRecoilValue(defaultMonthAtom);
+  const [thisMonth] = useState([getMonth(), getYear()]);
   const setSpendList = useSetRecoilState(spendListAtom);
   const { isLoading, data } = useQuery("getSpendList", () =>
-    getSpendList({ month: month })
+    getSpendList({ month: thisMonth })
   );
 
   useEffect(() => {
-    if (month.length > 0) {
-      setSpendList((prevState) => {
-        return {
-          ...prevState,
-          [[...month].reverse().join("")]:
-            data?.results.map((item) => {
+    setSpendList((prevState) => {
+      return {
+        ...prevState,
+        [[...thisMonth].reverse().join("")]:
+          data?.results
+            ?.map((item) => {
               return {
                 id: item.id,
                 ...settingProperties(item.properties),
               };
-            }) || [],
-        };
-      });
-    }
+            })
+            .filter((item) => item.mainCategory) || [],
+      };
+    });
   }, [data]);
 
   return (
     <Wrapper>
       <Header />
       <Content>
+        <Card>
+          <SpendSummary />
+        </Card>
         <Card>
           <CategoryTop5 />
         </Card>

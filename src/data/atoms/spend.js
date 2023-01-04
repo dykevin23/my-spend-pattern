@@ -1,10 +1,11 @@
 import { atom, selector, selectorFamily } from "recoil";
 import * as Enums from "data/enums";
+import { getMonth, getYear } from "utils";
 
 export const spendSearchConditionAtom = atom({
   key: "spendSearchCondition",
   default: {
-    month: [new Date().getMonth() + 1, new Date().getFullYear()],
+    month: [getMonth(), getYear()],
   },
 });
 

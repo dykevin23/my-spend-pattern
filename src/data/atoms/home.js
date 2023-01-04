@@ -1,12 +1,13 @@
 import { selector } from "recoil";
-import { spendListAtom, spendSearchConditionAtom } from "./spend";
+import { defaultMonthAtom } from "./common";
+import { spendListAtom } from "./spend";
 
 export const categoryTop5Selector = selector({
   key: "categoryTop5",
   get: ({ get }) => {
-    const { month } = get(spendSearchConditionAtom);
+    const defaultMonth = get(defaultMonthAtom);
     const spendData = get(spendListAtom) || {};
-    const spendList = spendData[[...month].reverse().join("")] || [];
+    const spendList = spendData[defaultMonth] || [];
     const categories = [...new Set(spendList.map((item) => item.mainCategory))];
 
     let data = categories.map((category) => {
@@ -27,9 +28,9 @@ export const categoryTop5Selector = selector({
 export const favoritesTop5Selector = selector({
   key: "favoritesTop5",
   get: ({ get }) => {
-    const { month } = get(spendSearchConditionAtom);
+    const defaultMonth = get(defaultMonthAtom);
     const spendData = get(spendListAtom) || {};
-    const spendList = spendData[[...month].reverse().join("")] || [];
+    const spendList = spendData[defaultMonth] || [];
     const categories = [...new Set(spendList.map((item) => item.mainCategory))];
 
     let data = categories.map((category) => {
@@ -48,9 +49,9 @@ export const favoritesTop5Selector = selector({
 export const CostTop5Selector = selector({
   key: "costTop5",
   get: ({ get }) => {
-    const { month } = get(spendSearchConditionAtom);
+    const defaultMonth = get(defaultMonthAtom);
     const spendData = get(spendListAtom) || {};
-    const spendList = spendData[[...month].reverse().join("")] || [];
+    const spendList = spendData[defaultMonth] || [];
 
     const sorting = spendList
       .map((item) => {

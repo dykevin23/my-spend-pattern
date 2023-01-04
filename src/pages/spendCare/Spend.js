@@ -61,12 +61,14 @@ const Spend = () => {
         return {
           ...prevState,
           [[...month].reverse().join("")]:
-            data?.results.map((item) => {
-              return {
-                id: item.id,
-                ...settingProperties(item.properties),
-              };
-            }) || [],
+            data?.results
+              .map((item) => {
+                return {
+                  id: item.id,
+                  ...settingProperties(item.properties),
+                };
+              })
+              .filter((item) => item.mainCategory) || [],
         };
       });
     }

@@ -1,32 +1,27 @@
 export const getSearchDateRange = (month) => {
-  console.log(month);
+  console.log("check => ", month);
   const lastDate = new Date(month[1], month[0], 0).getDate();
 
   return [
     {
       property: "date",
       date: {
-        on_or_after: `${month[1]}-${
-          month[0] >= 10 ? month[0] : `0${month[0]}`
-        }-01`,
+        on_or_after: `${month[1]}-${month[0]}-01`,
       },
     },
     {
       property: "date",
       date: {
-        on_or_before: `${month[1]}-${
-          month[0] >= 10 ? month[0] : `0${month[0]}`
-        }-${lastDate}`,
+        on_or_before: `${month[1]}-${month[0]}-${lastDate}`,
       },
     },
   ];
 };
 
 export const get3MonthRange = () => {
-  const today = new Date();
   const to = {
-    year: today.getFullYear(),
-    month: today.getMonth() + 1,
+    year: getYear(),
+    month: getMonth(),
   };
   const lastDate = new Date(to.year, to.month, 0).getDate();
   const from = {
@@ -46,9 +41,7 @@ export const get3MonthRange = () => {
     {
       property: "date",
       date: {
-        on_or_before: `${to.year}-${
-          to.month >= 10 ? to.month : `0${to.month}`
-        }-${lastDate}`,
+        on_or_before: `${to.year}-${to.month}-${lastDate}`,
       },
     },
   ];
@@ -63,4 +56,14 @@ export const getDayOfWeek = (date) => {
 
 export const getCommonCodeValue = (list, code) => {
   return list.find((item) => item.code === code)?.value || "";
+};
+
+export const getMonth = () => {
+  const month = new Date().getMonth() + 1;
+
+  return month > 9 ? String(month) : `0${month}`;
+};
+
+export const getYear = () => {
+  return String(new Date().getFullYear());
 };
