@@ -71,9 +71,8 @@ const FixedExpense = () => {
   const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
-    const monthStr = [...month].reverse().join("");
-    if (payMethodList[monthStr]) {
-      const spendList = Object.values(payMethodList[monthStr])
+    if (payMethodList[month]) {
+      const spendList = Object.values(payMethodList[month])
         .map((item) => item.data)
         .flat()
         .filter((item) => item.fixType === "fix");
@@ -115,14 +114,17 @@ const FixedExpense = () => {
         <FixedList>
           {Object.keys(fixedExpense).map((key) => {
             return (
-              <Category>
+              <Category key={key}>
                 <CategoryName>
                   {MAINCATEGORY.find((item) => item.code === key).value}
                 </CategoryName>
                 <ItemList>
-                  {fixedExpense[key].map((item) => {
+                  {fixedExpense[key].map((item, index) => {
                     return (
-                      <FixedItem onClick={() => handleSpendCardClick(item)}>
+                      <FixedItem
+                        key={index}
+                        onClick={() => handleSpendCardClick(item)}
+                      >
                         <ItemMark></ItemMark>
                         <ItemInfo>
                           <Title>{item?.title}</Title>

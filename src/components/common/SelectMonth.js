@@ -11,20 +11,22 @@ const Month = styled.span``;
 const SelectButton = styled.span``;
 
 const SelectMonth = ({ today, month, setMonth, type = "" }) => {
-  const [isPrevDisabled, setIsPrevDisabled] = useState(
-    month[0] === 9 && month[1] === 2022
-  );
+  const [isPrevDisabled, setIsPrevDisabled] = useState(month === "202209");
   const [isNextDisabled, setIsNextDisabled] = useState(
-    new Date(today).getMonth() + 1 === month[0]
+    new Date(today).getMonth() + 1 === Number(month.slice(4))
   );
 
   useEffect(() => {
-    setIsPrevDisabled(month[0] === 9 && month[1] === 2022);
-    setIsNextDisabled(new Date(today).getMonth() + 1 === month[0]);
+    setIsPrevDisabled(month === "202209");
+    setIsNextDisabled(
+      new Date(today).getMonth() + 1 === Number(month.slice(4))
+    );
   }, [month, today]);
 
-  const getMonth = (months, today) => {
-    const [month, year] = months;
+  const getMonth = (date, today) => {
+    const year = date.slice(0, 4);
+    const month = Number(date.slice(4));
+
     const getYear = (selectYear, todayYear) => {
       return selectYear === todayYear ? "" : `${(selectYear + "").slice(2)}년`;
     };
@@ -38,31 +40,38 @@ const SelectMonth = ({ today, month, setMonth, type = "" }) => {
     }
   };
 
-  const handleMonth = (month, option) => {
+  const handleMonth = (option) => {
     setMonth((prevState) => {
-      const [prevMonth, prevYear] = prevState.month;
+      const date = prevState.month;
+      const prevYear = Number(date.slice(0, 4));
+      const prevMonth = Number(date.slice(4));
       const calResult = prevMonth + option;
+
+      const nextYear =
+        calResult < 1 ? prevYear - 1 : calResult > 12 ? prevYear + 1 : prevYear;
+      const nextMonth =
+        calResult < 1
+          ? 12
+          : calResult > 12
+          ? `01`
+          : calResult < 10
+          ? `0${calResult}`
+          : calResult;
+
       return {
         ...prevState,
-        month: [
-          calResult < 1 ? 12 : calResult > 12 ? 1 : calResult,
-          calResult < 1
-            ? prevYear - 1
-            : calResult > 12
-            ? prevYear + 1
-            : prevYear,
-        ],
+        month: `${nextYear}${nextMonth}`,
       };
     });
   };
 
   return (
     <Wrapper>
-      <SelectButton onClick={() => !isPrevDisabled && handleMonth(month, -1)}>
+      <SelectButton onClick={() => !isPrevDisabled && handleMonth(-1)}>
         {isPrevDisabled ? "◁" : "◀︎"}
       </SelectButton>
       <Month>{getMonth(month, today)}</Month>
-      <SelectButton onClick={() => !isNextDisabled && handleMonth(month, +1)}>
+      <SelectButton onClick={() => !isNextDisabled && handleMonth(+1)}>
         {isNextDisabled ? "▷" : "▶︎"}
       </SelectButton>
     </Wrapper>

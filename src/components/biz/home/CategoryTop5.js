@@ -60,8 +60,8 @@ const CategoryItem = ({ rank, totalCost, category, cost }) => {
  * 분류(카테고리)별 TOP5
  * @returns
  */
-const CategoryTop5 = () => {
-  const data = useRecoilValue(categoryTop5Selector);
+const CategoryTop5 = ({ thisMonth }) => {
+  const data = useRecoilValue(categoryTop5Selector({ thisMonth }));
   const [totalCost, setTotalCost] = useState(0);
 
   useEffect(() => {
@@ -81,7 +81,7 @@ const CategoryTop5 = () => {
         {data?.slice(0, 5).map((item, index) => {
           return (
             <CategoryItem
-              key={item.id}
+              key={index}
               rank={index + 1}
               totalCost={totalCost}
               {...item}

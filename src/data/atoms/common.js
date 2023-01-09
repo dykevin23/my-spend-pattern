@@ -10,8 +10,3 @@ export const startMonthAtom = atom({
   key: "startMonth",
   default: "2022-09-01",
 });
-
-export const defaultMonthAtom = atom({
-  key: "defaultMont",
-  default: `${getYear()}${getMonth()}`,
-});

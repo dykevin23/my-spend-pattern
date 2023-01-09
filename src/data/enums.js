@@ -102,3 +102,10 @@ export const FIXTYPE = [
   { code: "fix", value: "고정지출" },
   { code: "nonFix", value: "변동지출" },
 ];
+Object.freeze(FIXTYPE);
+
+export const ISSPEND = [
+  { code: true, value: "지출포함" },
+  { code: false, value: "지출미포함" },
+];
+Object.freeze(ISSPEND);

@@ -5,7 +5,7 @@ import { getMonth, getYear } from "utils";
 export const spendSearchConditionAtom = atom({
   key: "spendSearchCondition",
   default: {
-    month: [getMonth(), getYear()],
+    month: `${getYear()}${getMonth()}`,
   },
 });
 
@@ -19,7 +19,7 @@ export const totalSpendCostSelector = selector({
   get: ({ get }) => {
     const { month } = get(spendSearchConditionAtom);
     const spendData = get(spendListAtom) || {};
-    const list = spendData[[...month].reverse().join("")] || [];
+    const list = spendData[month] || [];
     return list.length > 0
       ? list?.map((item) => item.withdraw).reduce((a, b) => a + b)
       : 0;
@@ -35,7 +35,7 @@ export const payMethodListSelector = selector({
     if (Object.keys(spendData).length > 0) {
       Object.keys(spendData).forEach((key) => {
         const types = [
-          ...new Set(spendData[key].map((item) => item.detailWay)),
+          ...new Set(spendData[key]?.map((item) => item.detailWay)),
         ];
 
         let typeData = {};
@@ -45,7 +45,7 @@ export const payMethodListSelector = selector({
           );
           typeData[type] = {
             detailWayName: Enums.DETAILWAY.find((item) => item.code === type)
-              .value,
+              ?.value,
             totalPrice: dataList
               .map((item) => item.withdraw)
               .reduce((a, b) => a + b),
@@ -69,8 +69,7 @@ export const spendDetailSelector = selectorFamily({
       const { month } = get(spendSearchConditionAtom);
       const data = get(payMethodListSelector);
 
-      const monthStr = [...month].reverse().join("");
-      const monthSpendList = data[monthStr][type]?.data || [];
+      const monthSpendList = data[month][type]?.data || [];
       return monthSpendList.find((item) => item.id);
     },
 });

@@ -50,8 +50,8 @@ const CategoryItem = ({ rank, title, withdraw }) => {
  * 금액별 TOP5
  * @returns
  */
-const CostTop5 = () => {
-  const data = useRecoilValue(CostTop5Selector);
+const CostTop5 = ({ thisMonth }) => {
+  const data = useRecoilValue(CostTop5Selector({ thisMonth }));
   return (
     <Wrapper>
       <Header>금액별 TOP5</Header>

@@ -13,7 +13,7 @@ export const settingProperties = (properties) => {
         const codeObject = Enums[key.toUpperCase()].find(
           (item) => item.value === value
         );
-        result[key] = codeObject?.code || value;
+        result[key] = codeObject?.code;
       } else {
         result[key] = value;
       }

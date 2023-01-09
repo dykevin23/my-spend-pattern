@@ -21,15 +21,30 @@ const Content = styled.div`
  * 이번달 소비요약
  * @returns
  */
-const SpendSummary = () => {
+const SpendSummary = ({ thisMonth }) => {
   const spend = useRecoilValue(spendListAtom);
 
   useEffect(() => {
-    console.log(spend);
-    if (spend.length > 0) {
-      console.log(spend.filter((item) => !item.mainCategory));
+    const thisMonthSpend = spend[thisMonth] || [];
+    if (thisMonthSpend.length > 0) {
+      // console.log("### here => ", thisMonthSpend);
+
+      const exceptLunchList = thisMonthSpend.filter(
+        (item) => item.subCategory === "lunch"
+      );
+      const exceptBabyList = thisMonthSpend.filter(
+        (item) => item.mainCategory === "baby" && !item.isSpend
+      );
+      const exceptFixedList = thisMonthSpend.filter(
+        (item) => item.fixType === "fix"
+      );
+
+      // console.log("### lunch => ", exceptLunchList);
+      // console.log("### baby => ", exceptBabyList);
+      // console.log("### fixed => ", exceptFixedList);
     }
   }, [spend]);
+
   return (
     <Wrapper>
       <Header>이번달 소비요약</Header>

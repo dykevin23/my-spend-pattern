@@ -3,15 +3,18 @@ import { getSearchDateRange, get3MonthRange } from "utils";
 import { callApi } from "utils/axios";
 
 export const getSpendList = async (params) => {
-  const { month } = params;
+  const { month, nextCursor } = params;
   const { data } = await callApi({
     url: "/spendList",
     paramObject: {
       filterObj: {
         and: [...getSearchDateRange(month)],
       },
+      nextCursor,
     },
   });
+
+  // console.log("### data => ", data);
 
   return data;
 };

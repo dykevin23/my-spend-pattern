@@ -1,18 +1,19 @@
-export const getSearchDateRange = (month) => {
-  console.log("check => ", month);
-  const lastDate = new Date(month[1], month[0], 0).getDate();
+export const getSearchDateRange = (date) => {
+  const year = date.slice(0, 4);
+  const month = date.slice(4, 6);
+  const lastDate = new Date(year, month, 0).getDate();
 
   return [
     {
       property: "date",
       date: {
-        on_or_after: `${month[1]}-${month[0]}-01`,
+        on_or_after: `${year}-${month}-01`,
       },
     },
     {
       property: "date",
       date: {
-        on_or_before: `${month[1]}-${month[0]}-${lastDate}`,
+        on_or_before: `${year}-${month}-${lastDate}`,
       },
     },
   ];

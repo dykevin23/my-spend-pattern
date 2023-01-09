@@ -13,15 +13,13 @@ import { spendListAtom } from "data/atoms/spend";
 import { useEffect } from "react";
 import { settingProperties } from "utils/property";
 import { useState } from "react";
-import { defaultMonthAtom } from "data/atoms/common";
 import { getMonth, getYear } from "utils";
 
 const Wrapper = styled.div``;
 const Content = styled.div``;
 
 const Home = () => {
-  const defaultMonth = useRecoilValue(defaultMonthAtom);
-  const [thisMonth] = useState([getMonth(), getYear()]);
+  const [thisMonth] = useState(`${getYear()}${getMonth()}`);
   const setSpendList = useSetRecoilState(spendListAtom);
   const { isLoading, data } = useQuery("getSpendList", () =>
     getSpendList({ month: thisMonth })
@@ -31,7 +29,7 @@ const Home = () => {
     setSpendList((prevState) => {
       return {
         ...prevState,
-        [[...thisMonth].reverse().join("")]:
+        [thisMonth]:
           data?.results
             ?.map((item) => {
               return {
@@ -49,32 +47,17 @@ const Home = () => {
       <Header />
       <Content>
         <Card>
-          <SpendSummary />
+          <SpendSummary thisMonth={thisMonth} />
         </Card>
         <Card>
-          <CategoryTop5 />
+          <CategoryTop5 thisMonth={thisMonth} />
         </Card>
         <Card>
-          <FavoritesTop5 />
+          <FavoritesTop5 thisMonth={thisMonth} />
         </Card>
         <Card>
-          <CostTop5 />
+          <CostTop5 thisMonth={thisMonth} />
         </Card>
-        {/* <Card>
-          <SpendSummary />
-        </Card>
-        <Card>
-          <CategoryTop5 />
-        </Card>
-        <Card>
-          <FavoritesTop5 />
-        </Card>
-        <Card>
-          <CostTop5 />
-        </Card>
-        <Card>
-          <RecentSpend />
-        </Card> */}
       </Content>
     </Wrapper>
   );

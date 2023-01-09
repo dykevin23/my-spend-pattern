@@ -49,41 +49,57 @@ const Spend = () => {
   const totalSpendCost = useRecoilValue(totalSpendCostSelector);
   const payMethodList = useRecoilValue(payMethodListSelector);
 
-  const [monthKey, setMonthKey] = useState([...month].reverse().join(""));
+  const [searchMonth, setSearchMonth] = useState(month);
+  const [nextCursor, setNextCursor] = useState(undefined);
+  const [thisMonthData, setThisMonthData] = useState([]);
 
-  const { isLoading, data, refetch } = useQuery("getSpendList", () =>
-    getSpendList({ month: month })
+  const { isLoading, data } = useQuery(
+    ["getSpendList", searchMonth, nextCursor],
+    () => getSpendList({ month: searchMonth, nextCursor })
   );
 
   useEffect(() => {
-    if (month.length > 0) {
-      setSpendList((prevState) => {
-        return {
-          ...prevState,
-          [[...month].reverse().join("")]:
-            data?.results
-              .map((item) => {
-                return {
-                  id: item.id,
-                  ...settingProperties(item.properties),
-                };
-              })
-              .filter((item) => item.mainCategory) || [],
-        };
-      });
+    setSearchMonth(month);
+    setNextCursor(undefined);
+  }, [month]);
+
+  useEffect(() => {
+    if (data) {
+      saveData(
+        data?.results
+          ?.map((item) => {
+            return {
+              id: item.id,
+              ...settingProperties(item.properties),
+            };
+          })
+          .filter((item) => item.mainCategory) || []
+      );
     }
   }, [data]);
 
   useEffect(() => {
-    refetch();
-  }, [month]);
-
-  useEffect(() => {
-    const monthStr = [...month].reverse().join("");
-    if (Object.keys(payMethodList).includes(monthStr)) {
-      setMonthKey(monthStr);
+    if (thisMonthData.length > 0) {
+      if (data.has_more) {
+        setNextCursor(data.next_cursor);
+      } else {
+        setSpendList((prev) => {
+          return {
+            ...prev,
+            [month]: thisMonthData,
+          };
+        });
+        setThisMonthData([]);
+      }
     }
-  }, [month, payMethodList]);
+  }, [thisMonthData]);
+
+  const saveData = (result) => {
+    setThisMonthData((prev) => {
+      const filter = result.filter((item) => item.id !== prev.id);
+      return prev.concat(filter);
+    });
+  };
 
   const handleClickSpendType = (props) => {
     const { month, payMethod, detailWayName, totalPrice } = props;
@@ -106,9 +122,9 @@ const Spend = () => {
       </SummaryInfo>
       <Card>
         {!isLoading
-          ? Object.keys(payMethodList[monthKey]).map((key) => {
-              const { detailWayName, totalPrice } =
-                payMethodList[monthKey][key];
+          ? payMethodList[month] &&
+            Object.keys(payMethodList[month])?.map((key) => {
+              const { detailWayName, totalPrice } = payMethodList[month][key];
               return (
                 <Box
                   key={key}
@@ -116,7 +132,7 @@ const Spend = () => {
                   whileTap="tap"
                   onClick={() =>
                     handleClickSpendType({
-                      month: monthKey,
+                      month: month,
                       payMethod: key,
                       detailWayName: detailWayName,
                       totalPrice: totalPrice,

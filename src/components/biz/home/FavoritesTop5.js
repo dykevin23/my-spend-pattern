@@ -60,8 +60,8 @@ const CategoryItem = ({ rank, totalCount, category, count }) => {
  * 자주사용하는 분류(카테고리) TOP5
  * @returns
  */
-const FavoritesTop5 = () => {
-  const data = useRecoilValue(favoritesTop5Selector);
+const FavoritesTop5 = ({ thisMonth }) => {
+  const data = useRecoilValue(favoritesTop5Selector({ thisMonth }));
   const [totalCount, setTotalCount] = useState(0);
 
   useEffect(() => {
@@ -81,7 +81,7 @@ const FavoritesTop5 = () => {
         {data?.slice(0, 5).map((item, index) => {
           return (
             <CategoryItem
-              key={item.id}
+              key={index}
               rank={index + 1}
               totalCount={totalCount}
               {...item}
